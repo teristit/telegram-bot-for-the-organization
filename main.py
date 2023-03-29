@@ -1,6 +1,9 @@
-def file_open(name):
-    f = open(name, encoding="utf-8")
-    f = f.read()
-    return f
+from settings import VK_TOKEN as token
+import vk_api
+from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
-print(file_open('test.txt'))
+
+
+vk_session = vk_api.VkApi(token=token)
+vk = vk_session.get_api()
+print(help(vk.messages.send()))

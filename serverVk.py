@@ -3,34 +3,34 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from settings import VK_TOKEN as token
 
 
-def write_msg(user_id, message):
-    vk.method('messages.send', {'user_id': user_id, 'message': message})
+
+bh = vk_api.VkApi(token = token)
+give = bh.get_api()
+longpoll = VkLongPoll(bh)
 
 
+def blasthack(id, text):
+    bh.method('messages.send', {'user_id' : id, 'message' : text, 'random_id': 0})
 
 
-# Авторизуемся как сообщество
-vk = vk_api.VkApi(token=token)
-
-# Работа с сообщениями
-longpoll = VkLongPoll(vk)
-
-# Основной цикл
 for event in longpoll.listen():
-
-    # Если пришло новое сообщение
     if event.type == VkEventType.MESSAGE_NEW:
 
-        # Если оно имеет метку для меня( то есть бота)
-        if event.to_me:
+       if event.to_me:
 
-            # Сообщение от пользователя
-            request = event.text
 
-            # Каменная логика ответа
-            if request == "привет":
-                write_msg(event.user_id, "Хай")
-            elif request == "пока":
-                write_msg(event.user_id, "Пока((")
-            else:
-                write_msg(event.user_id, "Не поняла вашего ответа...")
+          message = event.text.lower()
+
+          id = event.user_id
+
+
+
+          if message == 'старт':
+            blasthack(id, 'Здравствуйте!\nВы запустили бота')
+            blasthack(id, 'Выберите\nВы запустили бота')
+
+          elif message == 'как дела?':
+              blasthack(id, 'Хорошо, а твои как?' )
+
+          else:
+             blasthack(id, 'Я вас не понимаю! :(')
