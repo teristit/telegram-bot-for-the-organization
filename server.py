@@ -33,6 +33,7 @@ def admin_message(message):
 @bot.message_handler(commands=["start"])
 def start_message(message):
     flag = ''
+    bot.send_message(ID_ADMIN,message.from_user.id)
     bot.send_message(message.chat.id, text='Здравствуйте!\nВы запустили бота')
     menu_send(message.chat.id, bot)
 
@@ -107,14 +108,15 @@ def get_text_messages(message):
     if flag:
         try:
             src = 'data/' + flag
-            with open(src, 'w') as new_file:
+            with open(src, 'w', encoding="utf-8") as new_file:
                 new_file.write(message.text)
 
             bot.reply_to(message, "Пожалуй, я сохраню это")
         except Exception as e:
             bot.reply_to(message, 'Ошибка')
         flag = ''
-
+    else:
+        bot.reply_to(message, 'Я вас не понимаю')
 
 @bot.message_handler(content_types=['document'])
 def handle_docs_photo(message):
