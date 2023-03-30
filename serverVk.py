@@ -26,15 +26,11 @@ for event in longpoll.listen():
             message = event.text.lower()
 
             id = event.user_id
-
-            if message in ['старт', '6']:
+            if message == 'старт':
                 blasthack(id, 'Здравствуйте!\nВы запустили бота')
-                blasthack(id, 'Выберите действие:')
-                blasthack(id, '1 Рассказать об организации')
-                blasthack(id, '2 Предоставить расписание')
-                blasthack(id, '3 Предоставить информацию о преподавателях')
-                blasthack(id, '4 Предоставить список направлений')
-                blasthack(id, '5 Предоставить контактные данные')
+            if message in ['старт', '6']:
+                blasthack(id,
+                          'Выберите действие:\n1 Рассказать об организации\n2 Предоставить расписание\n3 Предоставить информацию о преподавателях\n4 Предоставить список направлений\n5 Предоставить контактные данные')
 
 
             elif message == '1':
@@ -57,13 +53,8 @@ for event in longpoll.listen():
                 name = 'contacts.txt'
                 text = file_open(name)
                 blasthack(id, text)
-            elif message == '6':
-                blasthack(id, 'Выберите действие:')
-                blasthack(id, '1 Рассказать об организации')
-                blasthack(id, '2 Предоставить расписание')
-                blasthack(id, '3 Предоставить информацию о преподавателях')
-                blasthack(id, '4 Предоставить список направлений')
-                blasthack(id, '5 Предоставить контактные данные')
 
             else:
                 blasthack(id, 'Я вас не понимаю')
+            if message not in ['старт', '6']:
+                blasthack(id, '6 Вернутся в меню')

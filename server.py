@@ -1,10 +1,10 @@
 import telebot
 from telebot import types
-
+from settings import TG_TOKEN, ID_ADMIN
 from menu_send import menu_send
 
-TG_TOKEN, ID_ADMIN = open('data/settings.txt').readlines()
-TG_TOKEN = TG_TOKEN[:-1:]
+
+
 bot = telebot.TeleBot(TG_TOKEN)
 flag = ''
 
@@ -32,7 +32,7 @@ def admin_message(message):
 
 @bot.message_handler(commands=["start"])
 def start_message(message):
-    bot.send_message(ID_ADMIN, message.chat.id)
+    flag = ''
     bot.send_message(message.chat.id, text='Здравствуйте!\nВы запустили бота')
     menu_send(message.chat.id, bot)
 
@@ -40,6 +40,7 @@ def start_message(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
     global flag
+    bot.delete_message(call.message.chat.id, call.message.message_id)
     if call.data == 'but1':
         name = 'information.txt'
         text = file_open(name)
